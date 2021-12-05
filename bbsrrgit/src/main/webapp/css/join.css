@@ -1,0 +1,58 @@
+body{
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color:#ededed;
+}
+.join01{
+    border:1px solid #999;
+    width:60%;
+    margin:10px auto;
+    background:#fff;
+    border-radius:8px;
+    padding:30px;
+    box-shadow:0 0 20px 5px rgba(0,0,0,0.15);
+}
+.all input[type=checkbox]{
+    display:none;
+}
+.all span.cbox{
+    display:inline-block;
+    width:30px;
+    height:30px;
+}
+.all input[type=checkbox]+span.cbox{
+    background: url(../images/check.jpg) no-repeat -53px -64px;
+    background-size:100px;
+    vertical-align:middle;
+}
+.all input[type=checkbox]:checked+span.cbox{
+    background: url(../images/check.jpg) no-repeat -53px -7px;
+    background-size:100px;
+    vertical-align:middle;    
+}
+.yak{
+    height:100px;
+    overflow-y: auto;
+    border:1px solid #ddd;
+    padding:10px;
+    background-color:#ededed;
+    white-space: pre-line;  /* 글씨 쓴 대로 보여주기  pre-line  pre  pre-wrap */
+}
+.alert{
+    display:none;
+}
+.viewfindid{
+	width: 300px;
+	height: 200px;
+	border: 1px solid #333;
+	background: #fff;
+	padding: 30px;
+	box-shadow: 5px 5px 10px 0 rgba(0,0,0, .23);
+	position: fixed;
+	top: 20%;
+	left: calc(50% - 150px);
+	display: none;
+}
+.btn-find{
+	font-size:0.9rem;
+	letter-spacing: -1px;
+}
