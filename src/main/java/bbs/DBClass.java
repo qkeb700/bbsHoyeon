@@ -97,7 +97,7 @@ public class DBClass {
       return count;
    }
    
-   public List<BbsDTO> selectPaging(int st, int ed, String col, String val) throws Exception {
+   public static List<BbsDTO> selectPaging(int st, int ed, String col, String val) throws Exception {
       Connection conn = getMYSQLConnection();
       PreparedStatement pstmt = null;
       ResultSet rs = null;
@@ -106,17 +106,51 @@ public class DBClass {
       try {
          switch(col) {
          case "username":
-            sql = "";
+            sql = "select * from bbs01 where username like ? order by num desc limit ?, ?";
          break;
          case "subject":
-            
+            sql = "select * from bbs01 where subject like ? order by num desc limit ?, ?";
          break;
          case "content":
-            
+            sql = "select * from bbs01 where content like ? order by num desc limit ?, ?";
          break;
          case "all":
-            
+            sql = "select * from bbs01 where subject like ? or content like ? order by num desc limit ?, ?";
          break;
+         default:
+            sql = "select * from bbs01 order by num desc limit ?, ?";
+         }
+         pstmt = conn.prepareStatement(sql);
+         if(val == "") {
+            pstmt.setInt(1, st);
+            pstmt.setInt(2, ed);
+         } else {
+            if(col.equals("all")) {
+               pstmt.setString(1, "%" + val + "%");
+               pstmt.setString(2, "%" + val + "%");
+               pstmt.setInt(3, st);
+               pstmt.setInt(4, ed);
+            } else {
+               pstmt.setString(1, "%" + val + "%");
+               pstmt.setInt(2, st);
+               pstmt.setInt(3, ed);
+            }
+         }
+         rs = pstmt.executeQuery();
+         while(rs.next()) {
+            BbsDTO bbs = new BbsDTO();
+            bbs.setNum(rs.getString("num"));
+            bbs.setUsername(rs.getString("username"));
+            bbs.setUserpass(rs.getString("userpass"));
+            bbs.setSubject(rs.getString("subject"));
+            bbs.setContent(rs.getString("content"));
+            bbs.setWdate(rs.getString("wdate"));
+            bbs.setUdate(rs.getString("udate"));
+            bbs.setUip(rs.getString("uip"));
+            bbs.setSec(rs.getString("sec"));
+            bbs.setCt(rs.getString("ct"));
+            
+            list.add(bbs);
          }
       }finally {
          if(pstmt != null) {
@@ -130,5 +164,3 @@ public class DBClass {
       return list;
    }
 }
-
-
